@@ -17,20 +17,30 @@ export class MyComponent {
         <slot name={this.item.id}></slot>
       </div>
 
-      {this.item.children.map((item) =>
-        <my-component item={item}>
-          <div class="nested-child-slot" slot={item.id}>
-            <slot name={item.id}></slot>
-          </div>
-
-          {item.children?.map(
-            (child) =>
-              <div class="child-slot" slot={child.id}>
-                <slot name={child.id}></slot>
+      {this.item.children.map((item) => 
+        <div>
+          {this.showLinks &&
+            <my-component-link item={item}>
+              <div class="link-slot" slot={item.id}>
+                {`----> ${item.id}`}
               </div>
-          )}
-        </my-component>)
-      }
+            </my-component-link>
+          }
+
+          <my-component item={item}>
+            <div class="nested-child-slot" slot={item.id}>
+              <slot name={item.id}></slot>
+            </div>
+
+            {item.children?.map(
+              (child) =>
+                <div class="child-slot" slot={child.id}>
+                  <slot name={child.id}></slot>
+                </div>
+            )}
+          </my-component>
+        </div>
+      )}
     </Host>;
   }
 }

@@ -11,6 +11,9 @@ export namespace Components {
         "item": IItem;
         "showLinks": boolean;
     }
+    interface MyComponentLink {
+        "item": IItem;
+    }
     interface MyRoot {
         "showLinks": boolean;
     }
@@ -22,6 +25,12 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLMyComponentLinkElement extends Components.MyComponentLink, HTMLStencilElement {
+    }
+    var HTMLMyComponentLinkElement: {
+        prototype: HTMLMyComponentLinkElement;
+        new (): HTMLMyComponentLinkElement;
+    };
     interface HTMLMyRootElement extends Components.MyRoot, HTMLStencilElement {
     }
     var HTMLMyRootElement: {
@@ -30,6 +39,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "my-component": HTMLMyComponentElement;
+        "my-component-link": HTMLMyComponentLinkElement;
         "my-root": HTMLMyRootElement;
     }
 }
@@ -38,11 +48,15 @@ declare namespace LocalJSX {
         "item"?: IItem;
         "showLinks"?: boolean;
     }
+    interface MyComponentLink {
+        "item"?: IItem;
+    }
     interface MyRoot {
         "showLinks"?: boolean;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
+        "my-component-link": MyComponentLink;
         "my-root": MyRoot;
     }
 }
@@ -51,6 +65,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "my-component-link": LocalJSX.MyComponentLink & JSXBase.HTMLAttributes<HTMLMyComponentLinkElement>;
             "my-root": LocalJSX.MyRoot & JSXBase.HTMLAttributes<HTMLMyRootElement>;
         }
     }

@@ -42,7 +42,7 @@ export class MyRoot {
     return [this.item1, this.item2].map((item) => {
       const deepChildren = this.getDeepChildren(item);
 
-      return <my-component item={item}>
+      return <my-component item={item} showLinks={this.showLinks}>
         <div class="parent-slot" slot={item.id}>
           <slot name={item.id}></slot>
         </div>
