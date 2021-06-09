@@ -1,3 +1,9 @@
 :host {
   display: block;
 }
+my-component {
+  margin-bottom: 1rem;
+}
+.child-slot {
+  margin-left: 1rem;
+}

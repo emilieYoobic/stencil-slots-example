@@ -9,7 +9,6 @@ import { IItem } from '../../types/item.interface';
 export class MyComponent {
 
   @Prop() item: IItem;
-  // @Prop() showLinks: boolean = false;
   @Prop() level: number = 0;
 
   render() {
@@ -19,7 +18,7 @@ export class MyComponent {
       </div>
 
       {this.item.children?.map((item) => 
-        <my-component level={this.level+1} item={{...item}}>
+        <my-component item={{...item}} level={this.level+1}>
           <div class="nested-child-slot" slot={item.id}>
             <slot name={item.id}></slot>
           </div>

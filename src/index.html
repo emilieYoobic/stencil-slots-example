@@ -8,21 +8,48 @@
     <script type="module" src="/build/stencil-recursive-example.esm.js"></script>
     <script nomodule src="/build/stencil-recursive-example.js"></script>
   </head>
-  <body>
+  <body onload="init()">
     <button type="button" onclick="addItem()" style="margin-bottom: 1rem">Add item on section 1.2</button>
 
-    <my-root id="my-root">
-      <div slot="1">Title 1</div>
-      <div slot="1.1">section 1.1</div>
-      <div slot="1.1.1">section 1.1.1</div>
-      <div slot="1.1.2">section 1.1.2</div>
-      <div slot="1.2">section 1.2</div>
-      <div slot="2">Title 2</div>
-      <div slot="2.1">section 2.1</div>
-      <div slot="2.1.1">section 2.1.1</div>
-    </my-root>
+    <my-root id="my-root" />
 
     <script>
+      function init() {
+        const element = document.getElementById("my-root");
+
+        // Define the initial list of items
+        //
+        const child111 = { id: '1.1.1', title: 'section 1.1.1', children: [], ancestor: '1' };
+        const child112 = { id: '1.1.2', title: 'section 1.1.2', children: [], ancestor: '1' };
+        const child113 = { id: '1.1.3', title: 'section 1.1.3', children: [], ancestor: '1' };
+        const child11 = { id: '1.1', title: 'section 1.1', children: [child111, child112, child113], ancestor: '1' };
+        const child12 = { id: '1.2', title: 'section 1.2', children: [], ancestor: '1' };
+        const item1 = { id: '1', title: 'Title 1', children: [child11, child12] };
+
+        const items = [
+          item1,
+          child11,
+          child111,
+          child112,
+          child113,
+          child12
+        ];
+
+        // Create the contents that will be put into the slots of each item, and append them to the root component
+        //
+        items.forEach((item) => {
+          const div = document.createElement('div');
+          div.setAttribute('slot', item.id);
+          div.innerText = item.title;
+
+          element.appendChild(div);
+        });
+
+        // Assign the list of the items to display to the root component
+        //
+        element.items = items;
+      }
+
       function addItem() {
         const element = document.getElementById("my-root");
 
