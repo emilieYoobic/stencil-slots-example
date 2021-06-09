@@ -9,13 +9,14 @@ import { IItem } from "./types/item.interface";
 export namespace Components {
     interface MyComponent {
         "item": IItem;
-        "showLinks": boolean;
+        "level": number;
     }
     interface MyComponentLink {
         "item": IItem;
     }
     interface MyRoot {
-        "showLinks": boolean;
+        "items": Array<IItem>;
+        "level": number;
     }
 }
 declare global {
@@ -46,13 +47,14 @@ declare global {
 declare namespace LocalJSX {
     interface MyComponent {
         "item"?: IItem;
-        "showLinks"?: boolean;
+        "level"?: number;
     }
     interface MyComponentLink {
         "item"?: IItem;
     }
     interface MyRoot {
-        "showLinks"?: boolean;
+        "items"?: Array<IItem>;
+        "level"?: number;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
