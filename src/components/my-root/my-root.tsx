@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { IItem } from '../../types/item.interface';
 
 @Component({
@@ -11,19 +11,21 @@ export class MyRoot {
   @Prop({ mutable: true }) items: Array<IItem> = [];
   @Prop() level: number = 0;
 
+  @Event() addClicked: EventEmitter<{ parentId: string, id: string, title: string, children: Array<IItem>, ancestor: string }>;
+
   get parents(): Array<IItem> {
     return this.items.filter((item) => !item.ancestor);
   }
 
   getAllChildren = (parent: IItem) => {
     return this.items.filter((item) => item.ancestor === parent.id);
-  };
+  }
 
   render() {
     return this.parents.map((item) => {
       const children = this.getAllChildren(item);
 
-      return <my-component item={{...item}} level={this.level+1}>
+      return <my-component item={{...item}} level={this.level}>
         <div class="parent-slot" slot={item.id}>
           <slot name={item.id}></slot>
         </div>

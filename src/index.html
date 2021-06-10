@@ -9,13 +9,12 @@
     <script nomodule src="/build/stencil-recursive-example.js"></script>
   </head>
   <body onload="init()">
-    <button type="button" onclick="addItem()" style="margin-bottom: 1rem">Add item on section 1.2</button>
 
-    <my-root id="my-root" />
+    <my-root id="my-root"></my-root>
 
     <script>
       function init() {
-        const element = document.getElementById("my-root");
+        const element = document.getElementById('my-root');
 
         // Define the initial list of items
         //
@@ -24,16 +23,9 @@
         const child113 = { id: '1.1.3', title: 'section 1.1.3', children: [], ancestor: '1' };
         const child11 = { id: '1.1', title: 'section 1.1', children: [child111, child112, child113], ancestor: '1' };
         const child12 = { id: '1.2', title: 'section 1.2', children: [], ancestor: '1' };
-        const item1 = { id: '1', title: 'Title 1', children: [child11, child12] };
+        const item1 = { id: '1', title: 'Part 1', children: [child11, child12] };
 
-        const items = [
-          item1,
-          child11,
-          child111,
-          child112,
-          child113,
-          child12
-        ];
+        const items = [ item1, child11, child111, child112, child113, child12];
 
         // Create the contents that will be put into the slots of each item, and append them to the root component
         //
@@ -45,21 +37,22 @@
           element.appendChild(div);
         });
 
-        // Assign the list of the items to display to the root component
+        // Assign the list of the items to display into the root component
         //
         element.items = items;
+        element.addEventListener('addClicked', addItem);
       }
 
-      function addItem() {
-        const element = document.getElementById("my-root");
+      function addItem(event) {
+        const element = document.getElementById('my-root');
 
         const div = document.createElement('div');
-        div.setAttribute('slot', '1.2.1');
-        div.innerText = 'section 1.2.1';
+        div.setAttribute('slot', event.detail.id);
+        div.innerText = `section ${event.detail.id}`;
 
-        const child = { id: '1.2.1', title: 'section 1.2.1', children: [], ancestor: '1' };
-        const items = [...element.items, child];
-        items[4].children.push(child);
+        const parent = element.items.find((p) => p.id === event.detail.parentId);
+        const items = [...element.items, event.detail];
+        parent.children.push(event.detail);
 
         element.appendChild(div);
         element.items = items;

@@ -48,6 +48,7 @@ declare namespace LocalJSX {
     interface MyComponent {
         "item"?: IItem;
         "level"?: number;
+        "onAddClicked"?: (event: CustomEvent<{ parentId: string, id: string, title: string, children: Array<IItem>, ancestor: string }>) => void;
     }
     interface MyComponentLink {
         "item"?: IItem;
@@ -55,6 +56,7 @@ declare namespace LocalJSX {
     interface MyRoot {
         "items"?: Array<IItem>;
         "level"?: number;
+        "onAddClicked"?: (event: CustomEvent<{ parentId: string, id: string, title: string, children: Array<IItem>, ancestor: string }>) => void;
     }
     interface IntrinsicElements {
         "my-component": MyComponent;
